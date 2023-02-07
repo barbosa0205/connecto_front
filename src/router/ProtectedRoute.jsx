@@ -4,17 +4,8 @@ import useAuthContext from '../context/useAuthContext'
 
 const ProtectedRoute = (props) => {
   const {user} = useAuthContext()
-  if(!user) {
-    return <Navigate to='/auth' replace/>
-   }
-  return (
-   <>
-
-   {
-    props.children
-   }
-   </>
-  )
+  
+  return user ? props.children : <Navigate to='/auth'/>
 }
 
 export default ProtectedRoute

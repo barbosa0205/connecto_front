@@ -1,8 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ChatsPage = () => {
   return (
-    <div>ChatsPage (private auth required)</div>
+    <>
+
+    
+    </>
   )
 }
 

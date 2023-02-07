@@ -9,6 +9,7 @@ import SignIn from '../pages/auth/SignIn';
 import SignUp from '../pages/auth/SignUp';
 import NotFoundPage from '../pages/NotFoundPage';
 import MainRoutes from './MainRoutes';
+import PublicRoute from './PublicRoute';
 
 
 
@@ -16,22 +17,29 @@ import MainRoutes from './MainRoutes';
 const AppRouter = () => {
  
   
-  return <>
-  <BrowserRouter>
-    <Routes>
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
           {/* auth routes */}
-          <Route path="auth"element={<AuthPage/>}>
-            <Route index element={<SignIn/>} />
-            <Route element={<SignIn/>} path='signin'/>
-            <Route element={<SignUp/>} path='signup'/>
-            <Route element={<NotFoundPage/>} path='*'/>
+          <Route
+            path="auth"
+            element={
+              <PublicRoute>
+                <AuthPage />
+              </PublicRoute>
+            }
+          >
+            <Route index element={<SignIn />} />
+            <Route element={<SignIn />} path="signin" />
+            <Route element={<SignUp />} path="signup" />
+            <Route element={<NotFoundPage />} path="*" />
           </Route>
-          <Route element={<MainRoutes/>} path='/*'/>
-          
-    
-    </Routes>
-  </BrowserRouter>  
-  </>
+          <Route element={<MainRoutes />} path="/*" />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default AppRouter
