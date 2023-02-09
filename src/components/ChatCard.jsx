@@ -1,11 +1,15 @@
 import { format } from "date-fns";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/components/ChatCard.scss";
 const ChatCard = ({ data }) => {
   const { username, lastMessage, pendientToView } = data;
-
+  const navigate = useNavigate();
   return (
-    <li className="w-full flex items-center shadow-sm bg-white my-2 hover:bg-gray-50 cursor-pointer">
+    <li
+      onClick={() => navigate(`chat/${data.id}`)}
+      className="w-full flex items-center shadow-sm bg-white my-2 hover:bg-gray-50 cursor-pointer"
+    >
       <div className="w-fit px-2">
         <img
           className="min-w-[4.5rem] w-20"

@@ -1,22 +1,15 @@
-import React from 'react'
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from "react-router-dom";
-import AuthPage from '../pages/auth';
-import SignIn from '../pages/auth/SignIn';
-import SignUp from '../pages/auth/SignUp';
-import NotFoundPage from '../pages/NotFoundPage';
-import MainRoutes from './MainRoutes';
-import PublicRoute from './PublicRoute';
-
-
-
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthPage from "../pages/auth";
+import SignIn from "../pages/auth/SignIn";
+import SignUp from "../pages/auth/SignUp";
+import ChatPage from "../pages/chats/ChatPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import MainRoutes from "./MainRoutes";
+import ProtectedRoute from "./ProtectedRoute";
+import PublicRoute from "./PublicRoute";
 
 const AppRouter = () => {
- 
-  
   return (
     <>
       <BrowserRouter>
@@ -35,11 +28,19 @@ const AppRouter = () => {
             <Route element={<SignUp />} path="signup" />
             <Route element={<NotFoundPage />} path="*" />
           </Route>
+          <Route
+            path={"/chats/chat/:id"}
+            element={
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
+            }
+          />
           <Route element={<MainRoutes />} path="/*" />
         </Routes>
       </BrowserRouter>
     </>
   );
-}
+};
 
-export default AppRouter
+export default AppRouter;
