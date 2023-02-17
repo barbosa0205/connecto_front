@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuthContext from "../context/useAuthContext";
@@ -39,7 +40,9 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      {openSidebar ? <Sidebar toggleSidebar={toggleSidebar} /> : ""}
+      <AnimatePresence>
+        {openSidebar ? <Sidebar toggleSidebar={toggleSidebar} /> : ""}
+      </AnimatePresence>
     </>
   );
 };
