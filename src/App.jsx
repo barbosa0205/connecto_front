@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import AuthContextProvider from './context/AuthContextProvider'
-import AppRouter from './router/AppRouter'
-
-
-
+import { useState } from "react";
+import AuthContextProvider from "./context/AuthContextProvider";
+import AppRouter from "./router/AppRouter";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <AuthContextProvider>
-<AppRouter />
+      <AppRouter />
     </AuthContextProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -39,7 +39,7 @@ const ChatPage = () => {
       </div>
 
       {/* enter message container */}
-      <EnterMessage />
+      <EnterMessage chatID={params.id} />
     </section>
   );
 };

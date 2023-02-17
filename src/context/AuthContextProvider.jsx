@@ -1,85 +1,35 @@
-import React, { createContext, useState } from "react";
-
+import React, { createContext, useEffect, useState } from "react";
+import { verifyTokenApi } from "../apis/auth.api";
 export const authContext = createContext(null);
 
 const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
 
-  const authUser = (username, password) => {
-    setUser({
-      id: "wicho1",
-      username,
-      password,
-      /* chats [] */
-      chats: [
-        {
-          id: "1",
-          username: "mi bb",
-          pendientToView: false,
-          /* message {} */
-          lastMessage: {
-            messageId: "123",
-            message: "Holiwis",
-            time: new Date(),
-          },
-          /* conversation */
-          conversation: [
-            /* message {} */
-            {
-              messageID: "456",
-              userId: "wicho1",
-              message: "Hola morr uwu",
-              time: new Date(),
-            },
-            {
-              messageID: "123",
-              userId: "keila1",
-              message: "Holiwis",
-              time: new Date(),
-            },
-            {
-              messageID: "012",
-              userId: "wicho1",
-              message: "comotas? 💟",
-              time: new Date(),
-            },
-            {
-              messageID: "345",
-              userId: "keila1",
-              message:
-                "fhasfuhidhadifhdiahfa hadifhaidhfia hiuahdfiushif uhiuahfdiusahfiu hiusdhfiuashfiu dahdsifuh iushfiusahf iuahsf aishfiushf uihsafiuhsaiufh isuhfiu hsaifsaihfhuis.",
-              time: new Date(),
-            },
-          ],
-        },
-        {
-          id: "2",
-          username: "jr facherito",
-          pendientToView: false,
-          /* message {} */
-          lastMessage: {
-            messageID: "123",
-            message: "papa bpprrruu!",
-            time: new Date(),
-          },
-          /* conversation */
-          conversation: [
-            /* message {} */
-            {
-              messageID: "123",
-              userId: "jr1",
-              message: "papa bpprrruu!",
-              time: new Date(),
-            },
-          ],
-        },
-      ],
-    });
+  useEffect(() => {
+    (async () => {
+      /* verificar si el token esta guardado en el localSorage*/
+      const token = localStorage.getItem("connecto_user_token");
+
+      if (!token) return;
+
+      /* verificar en el backend si el token es valido */
+      const data = await verifyTokenApi(token);
+      if (!data.success) return;
+
+      authUser(data.user);
+    })();
+  }, []);
+
+  const authUser = (userData) => {
+    setUser(userData);
   };
 
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("connecto_user_token");
+  };
 
-  const value = { user, authUser, logout };
+  const value = { user, authUser, setUser, logout };
 
   return (
     <authContext.Provider value={value}>{props.children}</authContext.Provider>

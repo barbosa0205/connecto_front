@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useAuthContext from "../context/useAuthContext";
 
 const Navbar = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
   return (
     <nav className="w-full h-28 bg-emerald-500 flex items-center">
       <div className="w-full flex items-center justify-between">
@@ -15,9 +15,11 @@ const Navbar = () => {
         </Link>
         <div className="w-full px-5 flex items-center justify-end">
           {user ? (
-            <p className="font-mono text-white font-semibold">
-              {user.username}
-            </p>
+            <>
+              <p className="font-mono text-white font-semibold">
+                {user.username}
+              </p>
+            </>
           ) : (
             <Link
               to="/auth"
