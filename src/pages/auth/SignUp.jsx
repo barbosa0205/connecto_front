@@ -45,7 +45,7 @@ const SignUp = () => {
 
         localStorage.setItem("connecto_user_token", data.token);
 
-        authUser(data.user);
+        authUser({ ...data.user, token: data.token });
       }
     })();
   }, [submited]);

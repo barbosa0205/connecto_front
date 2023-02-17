@@ -16,7 +16,7 @@ const AuthContextProvider = (props) => {
       const data = await verifyTokenApi(token);
       if (!data.success) return;
 
-      authUser(data.user);
+      authUser({ ...data.user, token });
     })();
   }, []);
 

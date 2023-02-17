@@ -1,10 +1,11 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthContext from "../context/useAuthContext";
 import Sidebar from "./Sidebar";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuthContext();
 
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -25,10 +26,24 @@ const Navbar = () => {
           </Link>
           <div className="w-full px-5 flex items-center justify-end">
             {user ? (
-              <i
-                onClick={toggleSidebar}
-                className="ri-menu-line text-4xl text-white font-semibold cursor-pointer"
-              ></i>
+              <>
+                <div className="flex items-center justify-center px-2">
+                  {/* search */}
+                  <i className="ri-search-2-line text-3xl px-3 mx-1 py-1 rounded-full bg-emerald-600 text-white opacity-80 cursor-pointer"></i>
+
+                  {/* add contact */}
+                  <i
+                    onClick={() => navigate("/add_contact")}
+                    className="ri-user-add-fill text-3xl mx-1 px-3 py-1 rounded-full bg-emerald-600 text-white opacity-80 cursor-pointer"
+                  ></i>
+                </div>
+
+                {/* menú */}
+                <i
+                  onClick={toggleSidebar}
+                  className="ri-menu-line text-4xl text-white font-semibold cursor-pointer"
+                ></i>
+              </>
             ) : (
               <Link
                 to="/auth"

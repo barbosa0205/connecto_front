@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
+import AddContactPage from "../pages/AddContactPage";
 import ChatsPage from "../pages/chats";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -19,7 +20,14 @@ const MainRoutes = () => {
           }
           path="chats"
         />
-
+        <Route
+          element={
+            <ProtectedRoute>
+              <AddContactPage />
+            </ProtectedRoute>
+          }
+          path="add_contact"
+        />
         <Route element={<NotFoundPage />} path="*" />
       </Routes>
     </MainLayout>

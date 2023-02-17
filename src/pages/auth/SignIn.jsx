@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { signInApi } from "../../apis/auth.api";
 import Button from "../../components/Button";
 import ErrorText from "../../components/ErrorText";
@@ -45,7 +45,7 @@ const SignIn = () => {
 
         localStorage.setItem("connecto_user_token", data.token);
 
-        authUser(data.user);
+        authUser({ ...data.user, token: data.token });
       }
     })();
   }, [submited]);

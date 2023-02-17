@@ -1,8 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const MenuItem = ({ children }) => {
+const MenuItem = ({ children, to, ...rest }) => {
   return (
-    <li className="text-center cursor-pointer border-b p-2">{children}</li>
+    <Link
+      {...rest}
+      to={to}
+      className="block text-center cursor-pointer border-b p-2"
+    >
+      {children}
+    </Link>
   );
 };
 

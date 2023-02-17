@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import MenuItem from "./MenuItem";
 import MenuList from "./MenuList";
 
@@ -25,7 +25,9 @@ const Sidebar = ({ toggleSidebar }) => {
       </header>
 
       <MenuList>
-        <MenuItem>Chats</MenuItem>
+        <MenuItem onClick={toggleSidebar} to={"/chats"}>
+          Chats
+        </MenuItem>
       </MenuList>
 
       <footer className="w-full px-4 py-6 flex items-center justify-end bg-gray-700">
