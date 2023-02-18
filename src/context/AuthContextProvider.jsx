@@ -1,8 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import { verifyTokenApi } from "../apis/auth.api";
+import useSocketContext from "./useSocketContext";
 export const authContext = createContext(null);
 
 const AuthContextProvider = (props) => {
+  const { connectToScket } = useSocketContext();
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -17,6 +20,9 @@ const AuthContextProvider = (props) => {
       if (!data.success) return;
 
       authUser({ ...data.user, token });
+
+      /* conectamos al socket */
+      connectToScket(data.user._id, token);
     })();
   }, []);
 

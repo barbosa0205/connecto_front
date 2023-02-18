@@ -24,5 +24,16 @@ export const useForm = (formValues, handleChangeErrors, handleSubmitErrors) => {
     }
   };
 
-  return { formData, handleChange, handleSubmit, submitErrors, submited };
+  const restartSubmit = () => {
+    setSubmited(false);
+  };
+
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    submitErrors,
+    submited,
+    restartSubmit,
+  };
 };

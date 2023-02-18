@@ -46,6 +46,9 @@ const SignUp = () => {
         localStorage.setItem("connecto_user_token", data.token);
 
         authUser({ ...data.user, token: data.token });
+
+        /* conectamos al socket */
+        connectToScket(data.user._id, token);
       }
     })();
   }, [submited]);

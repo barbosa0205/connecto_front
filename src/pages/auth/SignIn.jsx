@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import ErrorText from "../../components/ErrorText";
 import Input from "../../components/Input";
 import useAuthContext from "../../context/useAuthContext";
+import useSocketContext from "../../context/useSocketContext";
 import { useForm } from "../../hooks/useForm";
 import {
   signinChangeErrors,
@@ -13,7 +14,7 @@ import {
 
 const SignIn = () => {
   const { authUser } = useAuthContext();
-
+  const { connectToScket } = useSocketContext();
   const { formData, handleChange, handleSubmit, submited, submitErrors } =
     useForm(
       {
@@ -46,6 +47,9 @@ const SignIn = () => {
         localStorage.setItem("connecto_user_token", data.token);
 
         authUser({ ...data.user, token: data.token });
+
+        /* conectamos al socket */
+        connectToScket(data.user._id, token);
       }
     })();
   }, [submited]);

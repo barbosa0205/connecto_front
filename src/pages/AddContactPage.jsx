@@ -1,6 +1,6 @@
 import sub from "date-fns/sub/index";
 import React, { useState, useEffect } from "react";
-import { findUserByUsername } from "../apis/contacts.api";
+import { findUserByUsername } from "../apis/users.api";
 import UserItem from "../components/userItem";
 import useAuthContext from "../context/useAuthContext";
 import { useForm } from "../hooks/useForm";
@@ -11,13 +11,14 @@ import {
 const AddContactPage = () => {
   const { user } = useAuthContext();
 
-  const { formData, handleChange, handleSubmit, submited } = useForm(
-    {
-      username: "",
-    },
-    addContactChangeErrors,
-    addContactSubmitErrors
-  );
+  const { formData, handleChange, handleSubmit, submited, restartSubmit } =
+    useForm(
+      {
+        username: "",
+      },
+      addContactChangeErrors,
+      addContactSubmitErrors
+    );
 
   const [contactsFinded, setContactsFinded] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ const AddContactPage = () => {
 
         setContactsFinded(userData.data);
         setLoading(false);
+        restartSubmit();
       }
     })();
   }, [submited]);
@@ -82,7 +84,7 @@ const AddContactPage = () => {
                 ) : (
                   <ul className="w-full my-10">
                     {contactsFinded.map((contact) => (
-                      <UserItem data={contact} />
+                      <UserItem key={contact._id} data={contact} />
                     ))}
                   </ul>
                 )}
