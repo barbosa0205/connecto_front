@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { followUser } from "../apis/users.api";
+import { followUser, unfollowUser } from "../apis/users.api";
 import useAuthContext from "../context/useAuthContext";
 
 const UserItem = ({ data }) => {
   const { user, setUser } = useAuthContext();
   const [followed, setFollowed] = useState(false);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const contacts = user.contacts;
@@ -23,8 +24,31 @@ const UserItem = ({ data }) => {
       ) : (
         <>
           {followed ? (
-            <button className="mx-2 px-2 bg-gray-500 text-white font-mono text-2xl rounded-md">
-              Followed
+            <button
+              onClick={async () => {
+                setLoading(true);
+                const unfollowed = await unfollowUser({
+                  unfollowedID: data._id,
+                  userID: user._id,
+                  token: user.token,
+                });
+                if (!unfollowed.success) {
+                  setLoading(false);
+                  return;
+                }
+
+                setFollowed(false);
+                /* remove the contact */
+                let contacts = user.contacts.filter(
+                  (contact) => contact._id === data._id
+                );
+
+                setUser({ ...user, contacts });
+                setLoading(false);
+              }}
+              className="mx-2 px-2 bg-gray-500 text-white font-mono text-2xl rounded-md"
+            >
+              UNFOLLOW
             </button>
           ) : (
             <button

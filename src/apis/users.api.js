@@ -34,3 +34,19 @@ export const followUser = async ({ followedID, userID, token }) => {
     return { success: false, message: error.response.data.error };
   }
 };
+
+export const unfollowUser = async ({ unfollowedID, userID, token }) => {
+  try {
+    const { data } = await axios.patch(
+      "http://localhost:3000/api/v1/users/unfollowUser",
+      { userID, unfollowedID },
+      { headers: { "x-access-token": token } }
+    );
+    console.log("data", data);
+    if (data.success) {
+      return { success: true, message: data.message };
+    }
+  } catch (error) {
+    return { success: false, message: error.response.data.error };
+  }
+};
