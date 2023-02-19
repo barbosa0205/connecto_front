@@ -80,9 +80,11 @@ const AddContactPage = () => {
             ) : (
               <>
                 {!contactsFinded.length ? (
-                  <p>Not users found</p>
+                  <p className="font-mono font-semobild text-3xl text-white my-10">
+                    Not users found
+                  </p>
                 ) : (
-                  <ul className="w-full my-10">
+                  <ul className="w-full my-10 h-full overflow-y-scroll">
                     {contactsFinded.map((contact) => (
                       <UserItem key={contact._id} data={contact} />
                     ))}

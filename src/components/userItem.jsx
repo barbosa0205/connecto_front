@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { followUser, unfollowUser } from "../apis/users.api";
 import useAuthContext from "../context/useAuthContext";
 
@@ -15,10 +16,13 @@ const UserItem = ({ data }) => {
   }, []);
 
   return (
-    <li className="p-2 w-full border-t border-b flex items-center justify-center">
-      <p className="text-white text-2xl font-mono font-semibold mx-2">
+    <li className="p-2 w-full border-t last:border-b flex items-center justify-center">
+      <Link
+        to={`/chats/${data._id}`}
+        className="text-white text-2xl font-mono font-semibold mx-2 cursor-pointer"
+      >
         {data.username}
-      </p>
+      </Link>
       {loading ? (
         <button className="mx-2 px-2 bg-gray-400 rounded-md">Loading</button>
       ) : (
