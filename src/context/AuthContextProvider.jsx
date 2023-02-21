@@ -4,8 +4,8 @@ import useSocketContext from "./useSocketContext";
 export const authContext = createContext(null);
 
 const AuthContextProvider = (props) => {
-  const { connectToScket } = useSocketContext();
-
+  const { socket, connectToSocket } = useSocketContext();
+  const [socketSaved, setSocketSaved] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -22,9 +22,17 @@ const AuthContextProvider = (props) => {
       authUser({ ...data.user, token });
 
       /* conectamos al socket */
-      connectToScket(data.user._id, token);
+      connectToSocket(data.user._id, token);
     })();
   }, []);
+
+  useEffect(() => {
+    /* guardamos el socket en el usuario */
+    if (socket && user && !socketSaved) {
+      socket.emit("saveSocket", { userID: user._id });
+      setSocketSaved(true);
+    }
+  }, [socket, user]);
 
   const authUser = (userData) => {
     setUser(userData);

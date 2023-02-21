@@ -1,25 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAuthContext from "../context/useAuthContext";
+import useChatContext from "../context/useChatContext";
 
 const Conversation = ({ message }) => {
   const { user } = useAuthContext();
 
+  useEffect(() => {}, []);
+
   return (
     <div
-      key={message.id}
-      className={`w-full p-2 flex items-center ${
-        message.userId === user.id ? "justify-end" : "justify-start"
+      className={`w-full py-2 px-5 flex items-center ${
+        message.userId === user._id ? "justify-end" : "justify-start"
       }`}
     >
       {/* chat balloon */}
       <div
-        className={`shadow-sm rounded-3xl px-4 py-1 ${
-          message.userId === user.id
+        className={`shadow-sm rounded-3xl px-4 py-2 ${
+          message.userId === user._id
             ? "bg-emerald-200 mr-2"
             : "bg-gray-100 ml-2"
         }`}
       >
-        <p>{message.message}</p>
+        <p className="font-mono">{message.message}</p>
       </div>
     </div>
   );

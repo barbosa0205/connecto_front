@@ -54,6 +54,10 @@ const UserItem = ({ data }) => {
             >
               UNFOLLOW
             </button>
+          ) : user._id === data._id ? (
+            <button className="mx-2 px-2 font-mono bg-emerald-400 rounded-md cursor-default ">
+              YOU
+            </button>
           ) : (
             <button
               onClick={async () => {
@@ -72,7 +76,7 @@ const UserItem = ({ data }) => {
                 setUser({ ...user, contacts });
                 setLoading(false);
               }}
-              className="mx-2 px-2 bg-emerald-400 rounded-md"
+              className="mx-2 px-2 font-mono bg-emerald-400 rounded-md"
             >
               ADD
             </button>

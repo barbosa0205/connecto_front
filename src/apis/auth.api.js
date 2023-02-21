@@ -19,7 +19,7 @@ export const signUpApi = async ({ username, email, password }) => {
 
 export const signInApi = async ({ usernameOrEmail, password }) => {
   try {
-    const userData = await axios.post("http://localhost:3000/api/v1/signin", {
+    const userData = await axios.post(`http://localhost:3000/api/v1/signin`, {
       usernameOrEmail,
       password,
     });
@@ -37,7 +37,7 @@ export const signInApi = async ({ usernameOrEmail, password }) => {
 export const verifyTokenApi = async (token) => {
   try {
     const userData = await axios.get(
-      "http://localhost:3000/api/v1/verifyToken",
+      `http://localhost:3000/api/v1/verifyToken`,
       {
         headers: {
           "x-access-token": token,

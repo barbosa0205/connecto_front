@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative w-full h-28 bg-emerald-500 flex items-center">
+      <nav className="relative w-full h-28 flex items-center">
         <div className="w-full flex items-center justify-between">
           <Link
             to={"/"}
@@ -56,7 +56,7 @@ const Navbar = () => {
         </div>
       </nav>
       <AnimatePresence>
-        {openSidebar ? <Sidebar toggleSidebar={toggleSidebar} /> : ""}
+        {user && openSidebar ? <Sidebar toggleSidebar={toggleSidebar} /> : ""}
       </AnimatePresence>
     </>
   );

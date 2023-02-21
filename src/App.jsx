@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AuthContextProvider from "./context/AuthContextProvider";
+import ChatContextProvider from "./context/ChatContextProvider";
 import SocketContextProvider from "./context/SocketContextProvider";
 import AppRouter from "./router/AppRouter";
 
@@ -7,11 +8,13 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <SocketContextProvider>
-      <AuthContextProvider>
-        <AppRouter />
-      </AuthContextProvider>
-    </SocketContextProvider>
+    <ChatContextProvider>
+      <SocketContextProvider>
+        <AuthContextProvider>
+          <AppRouter />
+        </AuthContextProvider>
+      </SocketContextProvider>
+    </ChatContextProvider>
   );
 }
 

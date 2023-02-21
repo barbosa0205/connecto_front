@@ -14,7 +14,7 @@ import {
 
 const SignIn = () => {
   const { authUser } = useAuthContext();
-  const { connectToScket } = useSocketContext();
+  const { connectToSocket } = useSocketContext();
   const { formData, handleChange, handleSubmit, submited, submitErrors } =
     useForm(
       {
@@ -49,7 +49,7 @@ const SignIn = () => {
         authUser({ ...data.user, token: data.token });
 
         /* conectamos al socket */
-        connectToScket(data.user._id, token);
+        connectToSocket(data.user._id, data.token);
       }
     })();
   }, [submited]);

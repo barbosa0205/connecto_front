@@ -1,54 +1,109 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { addChatToUserApi, sendMessageApi } from "../apis/chat.api";
 import useAuthContext from "../context/useAuthContext";
+import useChatContext from "../context/useChatContext";
+import useSocketContext from "../context/useSocketContext";
 import { useForm } from "../hooks/useForm";
 import {
   handleEnterMessageChangeErrors,
   handleEterMessageSubmitErrors,
 } from "../utils/errors/enterMesageErrors";
 
-const EnterMessage = ({ chatID }) => {
+const EnterMessage = () => {
   const { user, setUser } = useAuthContext();
-  const { formData, handleChange, handleSubmit, submited } = useForm(
-    {
-      message: "",
-    },
-    handleEnterMessageChangeErrors,
-    handleEterMessageSubmitErrors
-  );
+  const { chat, to, from, updateChat } = useChatContext();
+  const { socket } = useSocketContext();
+  const { formData, handleChange, handleSubmit, submited, restartSubmit } =
+    useForm(
+      {
+        message: "",
+      },
+      handleEnterMessageChangeErrors,
+      handleEterMessageSubmitErrors
+    );
+
+  const [isWriting, setIsWriting] = useState(false);
+
+  const sendMessage = async () => {
+    try {
+      const resp = await sendMessageApi({
+        chatID: chat._id,
+        from: from._id,
+        to: to._id,
+        message: { message: formData.message, sendAt: new Date() },
+        token: user.token,
+      });
+      if (resp.toSocket) {
+        socket.emit("messageReceived", {
+          chatID: chat._id,
+          toSocket: resp.toSocket,
+          fromID: user._id,
+          toID: to._id,
+        });
+      }
+      return resp;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const writing = () => {
+    setIsWriting(true);
+    socket.emit("writing", { to, from, chatID: chat._id });
+    setTimeout(() => {
+      setIsWriting(false);
+    }, 3000);
+  };
+
+  const addChatToUser = async () => {
+    const resp = await addChatToUserApi({
+      chatID: chat._id,
+      to,
+      token: user.token,
+    });
+
+    if (resp.success) {
+      /* si el usuario al que se le envio el mensaje tiene un socket asignado le enviamos la notificación de que llego un nuevo mensaje */
+    }
+  };
 
   useEffect(() => {
-    if (submited) {
-      /* send message */
+    (async () => {
+      if (submited) {
+        /* si la conversacion esta vacia le creamos un chat al usuario que recivio el mensaje */
 
-      /* obtenemos el chat del usuario */
-      let chat = user.chats.find((chat) => chat.id === chatID);
+        addChatToUser();
 
-      /* colocamos el nuevo mensaje dentro de la conversación */
-      chat.conversation = [
-        ...chat.conversation,
-        { userId: user.id, messageID: "13u", message: formData.message },
-      ];
+        /* enviamos mensaje */
+        const data = await sendMessage();
 
-      /* obenemos el index de el chat */
-      let index = user.chats.findIndex((chat) => chat.id === chatID);
+        /* actualizamos el chat con la nueva conversacion*/
+        updateChat(data.chatData);
 
-      /* creamos un nuevo usuario el cual le cambiaremos el chat con la posicion del index por el nuevo chat */
-      let newUser = { ...user };
-      newUser.chats[index] = chat;
+        /* limpiamos el input */
+        formData.message = "";
 
-      /* por ultimo seteamos el nuevo usuario y limpiamos el textarea */
-      setUser(newUser);
-      formData.message = "";
-    }
-
+        /* submited vuelve a false para poder enviar de nuevo otro mensaje */
+        restartSubmit();
+      }
+    })();
     return () => {};
   }, [submited]);
 
   return (
     <div className="w-full flex items-center justify-between p-2 h-28 border-t border-t-gray-200">
       <textarea
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            handleSubmit();
+          }
+        }}
         value={formData.message}
-        onChange={handleChange}
+        onChange={(e) => {
+          handleChange(e);
+          /* enviar notificacion al usuario de que estas escribiendo */
+          writing();
+        }}
         name="message"
         className="w-full outline-none"
         type="text"

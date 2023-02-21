@@ -5,13 +5,13 @@ export const useForm = (formValues, handleChangeErrors, handleSubmitErrors) => {
   const [submitErrors, setSubmitErrors] = useState(null);
   const [submited, setSubmited] = useState(false);
 
-  const handleChange = ({ target }) => {
+  const handleChange = (e) => {
     // console.log(target.defaultValue)
-    const errors = handleChangeErrors(target.name, target.value);
+    const errors = handleChangeErrors(e.target.name, e.target.value);
     if (errors) return;
     setFormData({
       ...formData,
-      [target.name]: target.value,
+      [e.target.name]: e.target.value,
     });
   };
 
