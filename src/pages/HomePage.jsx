@@ -7,7 +7,7 @@ const HomePage = () => {
   const { user } = useAuthContext();
 
   return (
-    <div className="bg-white w-full  bg-gradient-to-b from-emerald-900 to-emerald-500">
+    <div className="w-full  bg-transparent">
       <section className="w-full flex flex-col justify-center items-start md:items-center py-10">
         <h1 className="max-w-xl sm:max-w-3xl text-5xl sm:text-7xl md:text-8xl md:max-w-4xl font-mono font-bold text-gray-200 pl-10">
           WELCOME TO CONNECTO CHAT APP
@@ -29,8 +29,8 @@ const HomePage = () => {
             </Link>
           ) : (
             <Link
-              to="/signin"
-              className="px-10 py-5 bg-gray-800 text-white font-mono rounded-xl my-10 text-3xl"
+              to="/auth"
+              className="px-10 py-5 bg-gray-800 hover:bg-gray-900 text-white font-mono rounded-xl my-10 text-3xl"
             >
               SIGN IN
             </Link>

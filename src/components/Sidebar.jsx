@@ -17,7 +17,7 @@ const Sidebar = ({ toggleSidebar }) => {
             type: "tween",
             duration: 0.2,
           }}
-          className="w-2/4 max-w-xl h-screen fixed flex flex-col top-0 right-0 bg-white shadow-md"
+          className="w-2/4 max-w-xl h-screen fixed flex flex-col top-0 right-0 bg-white shadow-md ss:hidden"
         >
           <header className="p-4 flex items-center justify-between border-b">
             <p>{user.username}</p>

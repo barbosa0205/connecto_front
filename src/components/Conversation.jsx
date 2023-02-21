@@ -21,7 +21,7 @@ const Conversation = ({ message }) => {
             : "bg-gray-100 ml-2"
         }`}
       >
-        <p className="font-mono">{message.message}</p>
+        <p className="font-mono text-gray-600">{message.message}</p>
       </div>
     </div>
   );

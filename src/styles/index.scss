@@ -9,7 +9,7 @@
 }
 
 html {
-  font-size:62.5%;
+  font-size: 62.5%;
 }
 
 body {
@@ -18,4 +18,20 @@ body {
 
 p {
   max-width: 75ch;
+}
+
+#root {
+  /* background: rgb(6, 78, 59);
+  background: linear-gradient(
+    180deg,
+    rgba(6, 78, 59, 0.9685714285714285) 0%,
+    rgba(18, 160, 106, 1) 17%
+  ); */
+
+  background: rgb(35, 124, 91);
+  background: linear-gradient(
+    180deg,
+    rgba(35, 124, 91, 1) 2%,
+    rgba(20, 157, 107, 1) 19%
+  );
 }

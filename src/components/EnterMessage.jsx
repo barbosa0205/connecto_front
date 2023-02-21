@@ -91,7 +91,7 @@ const EnterMessage = () => {
   }, [submited]);
 
   return (
-    <div className="w-full flex items-center justify-between p-2 h-28 border-t border-t-gray-200">
+    <div className="w-full flex items-center justify-between px-5 h-28 border-t border-t-gray-200">
       <textarea
         onKeyUp={(e) => {
           if (e.key === "Enter") {
@@ -105,7 +105,7 @@ const EnterMessage = () => {
           writing();
         }}
         name="message"
-        className="w-full outline-none"
+        className="w-full outline-none resize-none"
         type="text"
         placeholder="type a message"
       />

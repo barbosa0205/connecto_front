@@ -16,7 +16,7 @@ const UserItem = ({ data }) => {
   }, []);
 
   return (
-    <li className="p-2 w-full border-t last:border-b flex items-center justify-center">
+    <li className="p-2 w-full mx-auto border-y flex items-center border-x justify-center my-2 ">
       <Link
         to={`/chats/${data._id}`}
         className="text-white text-2xl font-mono font-semibold mx-2 cursor-pointer"

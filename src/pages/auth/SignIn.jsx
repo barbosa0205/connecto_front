@@ -57,9 +57,9 @@ const SignIn = () => {
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="w-11/12 p-2 mt-10 flex flex-col items-center justify-center"
+      className="w-11/12 max-w-2xl p-2 mt-10 flex flex-col items-center justify-center"
     >
-      <h2 className="my-3 font-mono text-4xl text-gray-700">SIGN IN</h2>
+      <h2 className="my-3 font-mono text-4xl text-white">SIGN IN</h2>
       <Input
         placeholder="username or email"
         type="text"
@@ -83,7 +83,7 @@ const SignIn = () => {
       <Button text="ENTER" onClick={handleSubmit} />
       {submitError ? <ErrorText text={submitError} /> : ""}
       <section className="mt-5">
-        <p className="font-mono text-lg">
+        <p className="font-mono text-xl text-white">
           don't have an account?{" "}
           <Link
             to="/auth/signup"

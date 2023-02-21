@@ -46,8 +46,9 @@ const AddContactPage = () => {
 
   return (
     <div className="h-full flex flex-col items-center">
-      <section className="mt-20 w-11/12 min-h-[20rem] bg-gray-800 flex flex-col items-center rounded-2xl">
+      <section className="mt-20 w-11/12 max-w-2xl min-h-[15rem] bg-gray-800 flex flex-col items-center justify-center rounded-2xl">
         <form
+          className="my-5"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -84,7 +85,7 @@ const AddContactPage = () => {
                     Not users found
                   </p>
                 ) : (
-                  <ul className="w-full my-10 h-full overflow-y-scroll">
+                  <ul className="w-full max-w-lg my-10 h-full overflow-y-scroll">
                     {contactsFinded.map((contact) => (
                       <UserItem key={contact._id} data={contact} />
                     ))}

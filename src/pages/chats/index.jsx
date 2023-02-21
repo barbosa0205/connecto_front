@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ListChats from "../../components/ListChats";
 import useAuthContext from "../../context/useAuthContext";
@@ -6,9 +6,11 @@ import useAuthContext from "../../context/useAuthContext";
 const ChatsPage = () => {
   const { user } = useAuthContext();
 
+  const [chatsList, setChatsList] = useState(null);
+
   return (
     <>
-      {user.chats.length ? (
+      {chatsList && chatsList?.length ? (
         <ListChats chats={user.chats} />
       ) : (
         <p>No chats, start chat with your friends</p>

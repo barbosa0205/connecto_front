@@ -6,7 +6,7 @@ import useAuthContext from "../context/useAuthContext";
 import "../styles/layouts/MainLayout.scss";
 const MainLayout = (props) => {
   return (
-    <div className="w-screen bg-emerald-900">
+    <div className="w-full bg-transparent">
       <Navbar />
       <main className="container mx-auto height">{props.children}</main>
       <Footer />
