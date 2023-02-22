@@ -1,4 +1,3 @@
-import sub from "date-fns/sub/index";
 import React, { useState, useEffect } from "react";
 import { findUserByUsername } from "../apis/users.api";
 import UserItem from "../components/userItem";

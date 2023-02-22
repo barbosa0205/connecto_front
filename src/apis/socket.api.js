@@ -4,7 +4,7 @@ export const saveSocket = async ({ socket, userID, token }) => {
   try {
     console.log({ socket, userID });
     const data = await axios.patch(
-      "http://localhost:3000/api/v1/socket",
+      "https://connecto-back.onrender.com/api/v1/socket",
       {
         socket,
         userID,

@@ -2,11 +2,14 @@ import axios from "axios";
 
 export const signUpApi = async ({ username, email, password }) => {
   try {
-    const userData = await axios.post("http://localhost:3000/api/v1/signup", {
-      username,
-      email,
-      password,
-    });
+    const userData = await axios.post(
+      "https://connecto-back.onrender.com:3000/api/v1/signup",
+      {
+        username,
+        email,
+        password,
+      }
+    );
     return {
       success: true,
       token: userData.data.token,
@@ -19,10 +22,13 @@ export const signUpApi = async ({ username, email, password }) => {
 
 export const signInApi = async ({ usernameOrEmail, password }) => {
   try {
-    const userData = await axios.post(`http://localhost:3000/api/v1/signin`, {
-      usernameOrEmail,
-      password,
-    });
+    const userData = await axios.post(
+      `https://connecto-back.onrender.com:3000/api/v1/signin`,
+      {
+        usernameOrEmail,
+        password,
+      }
+    );
 
     return {
       success: true,
@@ -37,7 +43,7 @@ export const signInApi = async ({ usernameOrEmail, password }) => {
 export const verifyTokenApi = async (token) => {
   try {
     const userData = await axios.get(
-      `http://localhost:3000/api/v1/verifyToken`,
+      `https://connecto-back.onrender.com/api/v1/verifyToken`,
       {
         headers: {
           "x-access-token": token,

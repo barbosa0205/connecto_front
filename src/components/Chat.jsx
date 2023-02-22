@@ -1,8 +1,8 @@
 import React from "react";
-
+import "../styles/pages/chats/ChatPage.scss";
 const Chat = ({ children }) => {
   return (
-    <div className="w-full h-[85%] overflow-y-scroll flex flex-col justify-end p-5">
+    <div className="minHeightConversation w-full overflow-y-scroll flex flex-col justify-end p-5">
       {children}
     </div>
   );

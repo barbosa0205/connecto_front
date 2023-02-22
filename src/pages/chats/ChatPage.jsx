@@ -51,7 +51,7 @@ const ChatPage = () => {
     <div className="container w-full h-full flex flex-col justify-center">
       <section className="w-full h-full m:h-[95%] max-w-4xl mx-auto flex flex-col shadow-md bg-white rounded-md">
         {/* conversation container */}
-        <div className="minHeightChat ss:min-h-[45rem] w-full">
+        <div className="flex flex-col ss:min-h-[45rem] w-full">
           {chat && from && to && (
             <>
               <header className="w-full p-2 h-20 flex items-center shadow-sm shadow-gray-200">

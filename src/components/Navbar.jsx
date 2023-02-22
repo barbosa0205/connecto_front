@@ -80,17 +80,19 @@ const Navbar = () => {
                 {openProfileMenu ? (
                   <FloatMenu onClick={(e) => e.stopPropagation()}>
                     {/* close */}
-                    <div className="w-full flex items-center justify-center border-b mb-4">
+                    <div className="w-full flex items-center justify-end border-b mb-4">
                       <i
                         onClick={() => setOpenProfileMenu(false)}
-                        className="ri-close-line"
+                        className="ri-close-line text-3xl"
                       ></i>
                     </div>
-                    <i
-                      onClick={logout}
-                      className="ri-logout-box-line mx-2 my-1 text-3xl cursor-pointer"
-                    ></i>
-                    <i className="ri-equalizer-line mx-2 my-1 text-3xl cursor-pointer"></i>
+                    <div className="w-full flex items-center">
+                      <i
+                        onClick={logout}
+                        className="ri-logout-box-line mx-2 my-1 text-3xl cursor-pointer"
+                      ></i>
+                      <i className="ri-equalizer-line mx-2 my-1 text-3xl cursor-pointer"></i>
+                    </div>
                   </FloatMenu>
                 ) : (
                   ""

@@ -9,7 +9,7 @@ const SocketContextProvider = (props) => {
   const [socket, setSocket] = useState(null);
   const { chats, chat, to, setTo, updateChat } = useChatContext();
   const connectToSocket = async () => {
-    const socket = io("http://localhost:3000");
+    const socket = io("https://connecto-back.onrender.com");
     socket.on("connect", () => {
       setSocket(socket);
     });

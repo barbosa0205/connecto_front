@@ -4,4 +4,8 @@
 
 .minHeightConversation {
   min-height: calc(100vh - 17rem);
+
+  @media (min-width: "550px") {
+    min-height: inherit;
+  }
 }

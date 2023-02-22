@@ -43,11 +43,11 @@ const UserItem = ({ data }) => {
 
                 setFollowed(false);
                 /* remove the contact */
-                let contacts = user.contacts.filter(
+                /* let contacts = user.contacts.filter(
                   (contact) => contact._id === data._id
-                );
+                ); */
 
-                setUser({ ...user, contacts });
+                setUser({ ...user, contacts: unfollowed.contacts });
                 setLoading(false);
               }}
               className="mx-2 px-2 bg-gray-500 text-white font-mono text-2xl rounded-md"
@@ -71,9 +71,8 @@ const UserItem = ({ data }) => {
 
                 setFollowed(true);
                 /* save the contact */
-                let contacts = user.contacts;
-                contacts = [data._id, ...contacts];
-                setUser({ ...user, contacts });
+
+                setUser({ ...user, contacts: followed.contacts });
                 setLoading(false);
               }}
               className="mx-2 px-2 font-mono bg-emerald-400 rounded-md"
