@@ -1,9 +1,9 @@
 import axios from "axios";
-
+import { API_URL } from "../constants";
 export const findUserByUsername = async (username, token) => {
   try {
     const data = await axios.get(
-      `https://connecto-back.onrender.com/api/v1/users/findUserByUsername?username=${username}`,
+      `${API_URL}/api/v1/users/findUserByUsername?username=${username}`,
       {
         headers: {
           "x-access-token": token,
@@ -23,7 +23,7 @@ export const findUserByUsername = async (username, token) => {
 export const followUser = async ({ followedID, userID, token }) => {
   try {
     const { data } = await axios.patch(
-      "https://connecto-back.onrender.com/api/v1/users/addUser",
+      `${API_URL}/api/v1/users/addUser`,
       { userID, followedID },
       { headers: { "x-access-token": token } }
     );
@@ -38,7 +38,7 @@ export const followUser = async ({ followedID, userID, token }) => {
 export const unfollowUser = async ({ unfollowedID, userID, token }) => {
   try {
     const { data } = await axios.patch(
-      "https://connecto-back.onrender.com/api/v1/users/unfollowUser",
+      `${API_URL}/api/v1/users/unfollowUser`,
       { userID, unfollowedID },
       { headers: { "x-access-token": token } }
     );

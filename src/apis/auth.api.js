@@ -1,15 +1,12 @@
 import axios from "axios";
-
+import { API_URL } from "../constants";
 export const signUpApi = async ({ username, email, password }) => {
   try {
-    const userData = await axios.post(
-      "https://connecto-back.onrender.com:3000/api/v1/signup",
-      {
-        username,
-        email,
-        password,
-      }
-    );
+    const userData = await axios.post(`${API_URL}/api/v1/signup`, {
+      username,
+      email,
+      password,
+    });
     return {
       success: true,
       token: userData.data.token,
@@ -22,13 +19,10 @@ export const signUpApi = async ({ username, email, password }) => {
 
 export const signInApi = async ({ usernameOrEmail, password }) => {
   try {
-    const userData = await axios.post(
-      `https://connecto-back.onrender.com:3000/api/v1/signin`,
-      {
-        usernameOrEmail,
-        password,
-      }
-    );
+    const userData = await axios.post(`${API_URL}/api/v1/signin`, {
+      usernameOrEmail,
+      password,
+    });
 
     return {
       success: true,
@@ -42,14 +36,11 @@ export const signInApi = async ({ usernameOrEmail, password }) => {
 
 export const verifyTokenApi = async (token) => {
   try {
-    const userData = await axios.get(
-      `https://connecto-back.onrender.com/api/v1/verifyToken`,
-      {
-        headers: {
-          "x-access-token": token,
-        },
-      }
-    );
+    const userData = await axios.get(`${API_URL}/api/v1/verifyToken`, {
+      headers: {
+        "x-access-token": token,
+      },
+    });
     return {
       success: true,
       token: userData.data.token,

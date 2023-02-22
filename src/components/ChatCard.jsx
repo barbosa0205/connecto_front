@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../context/useAuthContext";
 import "../styles/components/ChatCard.scss";
+
 const ChatCard = ({ data }) => {
   const { members, lastMessage, pendientToView } = data;
   const navigate = useNavigate();
@@ -10,8 +11,8 @@ const ChatCard = ({ data }) => {
   const [friend, setFriend] = useState(null);
 
   useEffect(() => {
-    const chattingWithYou = members.filter((member) => member._id === user._id);
-    if (chattingWithYou.length === 2) {
+    const chattingWithYou = members;
+    if (chattingWithYou.length === 1) {
       setFriend(members[0]);
     } else {
       const friend = members.find((member) => member._id !== user._id);
@@ -38,13 +39,13 @@ const ChatCard = ({ data }) => {
             />
           </div>
           <section className="username_date_container py-2 ml-5">
-            <div className="w-11/12 flex items-center justify-between">
+            <div className="w-[98%] flex items-center justify-between">
               <p className="w-9/12 text-gray-800 font-mono font-semibold text-ellipsis whitespace-nowrap overflow-hidden">
                 {friend.username}
               </p>
               {lastMessage ? (
-                <small className="font-mono text-lg">
-                  {format(new Date(lastMessage.sendAt), "ee/MM/yy")}
+                <small className="font-mono text-xl">
+                  {format(new Date(lastMessage.sendAt), "ee/MM/yy|h:maaa")}
                 </small>
               ) : (
                 ""

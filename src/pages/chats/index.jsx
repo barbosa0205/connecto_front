@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getChatsApi } from "../../apis/chat.api";
+import ContainerBox from "../../components/ContainerBox";
 import ListChats from "../../components/ListChats";
 import useAuthContext from "../../context/useAuthContext";
 import "../../styles/layouts/MainLayout.scss";
@@ -13,15 +14,18 @@ const ChatsPage = () => {
 
   const getChats = async () => {
     try {
+      setLoadingChats(true);
       const chatsData = await getChatsApi({
         userID: user._id,
         token: user.token,
       });
       if (!chatsData.success) {
         console.log({ chatsData });
+        setLoadingChats(false);
         return;
       }
       setChatsList(chatsData.chats);
+      setLoadingChats(false);
     } catch (error) {
       console.log("error al obtener chats", error);
     }
@@ -36,16 +40,26 @@ const ChatsPage = () => {
 
   return (
     <div className="flex w-full height">
-      {chatsList && chatsList?.length ? (
-        <ListChats chats={chatsList} />
-      ) : (
-        <div className="flex flex-col items-center justify-center w-full ss:max-w-4xl min-h-full ss:h-[40rem] ss:max-h-[50rem] mx-auto pt-20 ss:mt-16 bg-white rounded-md">
-          <p className="text-gray-800 font-mono text-3xl text-center font-semibold mb-20">
-            No chats, start chat with your friends
+      {loadingChats ? (
+        <ContainerBox>
+          <p className="text-3xl font-bold font-mono text-gray-700">
+            LOADING...
           </p>
-          {/* If has friends, show list of 2 friend, else button to add friends */}
-          {}
-        </div>
+        </ContainerBox>
+      ) : (
+        <>
+          {chatsList && chatsList?.length ? (
+            <ListChats chats={chatsList} />
+          ) : (
+            <ContainerBox>
+              <p className="text-gray-800 font-mono text-3xl text-center font-semibold mb-20">
+                No chats, start chat with your friends
+              </p>
+              {/* If has friends, show list of 2 friend, else button to add friends */}
+              {}
+            </ContainerBox>
+          )}
+        </>
       )}
     </div>
   );

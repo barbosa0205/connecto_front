@@ -1,10 +1,11 @@
 import axios from "axios";
+import { API_URL } from "../constants";
 
 export const saveSocket = async ({ socket, userID, token }) => {
   try {
     console.log({ socket, userID });
     const data = await axios.patch(
-      "https://connecto-back.onrender.com/api/v1/socket",
+      `${API_URL}/api/v1/socket`,
       {
         socket,
         userID,

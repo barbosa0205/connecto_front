@@ -1,9 +1,9 @@
 import axios from "axios";
-
+import { API_URL } from "../constants";
 export const getChatsApi = async ({ userID, token }) => {
   try {
     const { data } = await axios.get(
-      `https://connecto-back.onrender.com/api/v1/chats/?userID=${userID}`,
+      `${API_URL}/api/v1/chats/?userID=${userID}`,
       {
         headers: {
           "x-access-token": token,
@@ -28,7 +28,7 @@ export const getChatsApi = async ({ userID, token }) => {
 export const getChatApi = async ({ userID, id, token }) => {
   try {
     const { data } = await axios.get(
-      `https://connecto-back.onrender.com/api/v1/chats/${id}?userID=${userID}`,
+      `${API_URL}/api/v1/chats/${id}?userID=${userID}`,
       {
         headers: {
           "x-access-token": token,
@@ -39,8 +39,7 @@ export const getChatApi = async ({ userID, id, token }) => {
     if (data.success) {
       console.log("data chat", data);
       return {
-        success: true,
-        chat: data.chat,
+        ...data,
       };
     }
   } catch (error) {
@@ -53,7 +52,7 @@ export const getChatApi = async ({ userID, id, token }) => {
 export const deleteChatApi = async ({ id, userID, token }) => {
   try {
     const { data } = await axios.delete(
-      `https://connecto-back.onrender.com/api/v1/chats/${id}?userID=${userID}`,
+      `${API_URL}/api/v1/chats/${id}?userID=${userID}`,
       {
         headers: {
           "x-access-token": token,
@@ -76,7 +75,7 @@ export const deleteChatApi = async ({ id, userID, token }) => {
 
 export const sendMessageApi = async ({ chatID, from, to, message, token }) => {
   const { data } = await axios.post(
-    "https://connecto-back.onrender.com/api/v1/chats/sendMessage",
+    `${API_URL}/api/v1/chats/sendMessage`,
     { chatID, from, to, message },
     {
       headers: {
@@ -91,7 +90,7 @@ export const addChatToUserApi = async ({ chatID, to, token }) => {
   try {
     /* AQUI ME QUEDE */
     const { data } = await axios.post(
-      "https://connecto-back.onrender.com/api/v1/chats/addChatToUser",
+      `${API_URL}/api/v1/chats/addChatToUser`,
       {
         to,
         chatID,
@@ -115,7 +114,7 @@ export const addChatToUserApi = async ({ chatID, to, token }) => {
 export const exitToChatApi = async ({ userID, token }) => {
   try {
     const { data } = await axios.patch(
-      `https://connecto-back.onrender.com/api/v1/chats/exitToChat`,
+      `${API_URL}/api/v1/chats/exitToChat`,
       {
         userID,
         chatID,
