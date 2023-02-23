@@ -5,7 +5,16 @@ import useAuthContext from "../context/useAuthContext";
 const ProtectedRoute = (props) => {
   const { user } = useAuthContext();
 
-  return user ? props.children : <Navigate to="/auth" />;
+  return user ? (
+    props.children
+  ) : (
+    <Navigate
+      to="/auth"
+      state={{
+        from: location.pathname,
+      }}
+    />
+  );
 };
 
 export default ProtectedRoute;

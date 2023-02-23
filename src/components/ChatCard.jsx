@@ -27,7 +27,7 @@ const ChatCard = ({ data }) => {
           onClick={() => navigate(`/chats/${friend._id}`)}
           className="w-full flex items-center shadow-sm bg-white my-2 hover:bg-gray-50 cursor-pointer"
         >
-          <div className="w-fit px-2">
+          <div className="w-fit p-2">
             <img
               className="min-w-[4.5rem] w-20 ss:w-24"
               src={
@@ -51,14 +51,22 @@ const ChatCard = ({ data }) => {
                 ""
               )}
             </div>
-            {lastMessage ? (
-              <p className="text-gray-800 font-mono text-ellipsis whitespace-nowrap overflow-hidden pr-6">
-                {lastMessage.message}
+            {data.writing ? (
+              <p className="font-mono shadow-sm rounded-3xl font-bold w-fit ml-2 text-emerald-600">
+                writing...
               </p>
             ) : (
-              <p className="text-emerald-500 font-semibold font-mono text-ellipsis whitespace-nowrap overflow-hidden">
-                not have messages yet, start a conversation
-              </p>
+              <>
+                {lastMessage ? (
+                  <p className="text-gray-800 font-mono text-ellipsis whitespace-nowrap overflow-hidden pr-6">
+                    {lastMessage.message}
+                  </p>
+                ) : (
+                  <p className="text-emerald-500 font-semibold font-mono text-ellipsis whitespace-nowrap overflow-hidden">
+                    not have messages yet, start a conversation
+                  </p>
+                )}
+              </>
             )}
           </section>
         </li>

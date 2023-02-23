@@ -6,6 +6,7 @@
 }
 
 .maxHeightConversation {
-  min-height: calc(100vh - 24rem);
-  max-height: calc(100vh - 17rem);
+  justify-self: end;
+  min-height: calc(100% - 17rem);
+  max-height: calc(100% - 17rem);
 }

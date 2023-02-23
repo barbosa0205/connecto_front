@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signUpApi } from "../../apis/auth.api";
 import Button from "../../components/Button";
 import ErrorText from "../../components/ErrorText";
@@ -12,6 +12,8 @@ import {
 } from "../../utils/errors/signupErrors";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { authUser } = useAuthContext();
 
   const { formData, handleChange, handleSubmit, submited, submitErrors } =
@@ -49,6 +51,8 @@ const SignUp = () => {
 
         /* conectamos al socket */
         connectToScket(data.user._id, token);
+
+        navigate(location.state.from || "/");
       }
     })();
   }, [submited]);

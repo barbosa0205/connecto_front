@@ -4,11 +4,13 @@ import { getChatsApi } from "../../apis/chat.api";
 import ContainerBox from "../../components/ContainerBox";
 import ListChats from "../../components/ListChats";
 import useAuthContext from "../../context/useAuthContext";
+import useChatContext from "../../context/useChatContext";
 import "../../styles/layouts/MainLayout.scss";
 const ChatsPage = () => {
   const { user } = useAuthContext();
+  const { chatsList, setChatsList } = useChatContext();
   const [friendsList, setFriendsList] = useState(null);
-  const [chatsList, setChatsList] = useState(null);
+
   const [loadingChats, setLoadingChats] = useState(false);
   const [loadingFriends, setLoadingFriends] = useState(false);
 
@@ -36,6 +38,10 @@ const ChatsPage = () => {
   useEffect(() => {
     getChats();
     getFriends();
+
+    return () => {
+      setChatsList(null);
+    };
   }, []);
 
   return (

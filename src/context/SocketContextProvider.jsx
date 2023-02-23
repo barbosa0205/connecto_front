@@ -1,43 +1,88 @@
 import React, { createContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { saveSocket } from "../apis/socket.api";
+import { API_URL } from "../constants";
 import useChatContext from "./useChatContext";
-
+import usePushNotificationcontext from "./usePushNotificationcontext";
 export const socketContext = createContext(null);
 
 const SocketContextProvider = (props) => {
+  const { messageNotification, pushMessageNotification } =
+    usePushNotificationcontext();
+
   const [socket, setSocket] = useState(null);
-  const { chats, chat, to, setTo, updateChat } = useChatContext();
+  const { chats, chat, to, setTo, updateChat, chatsList, setChatsList } =
+    useChatContext();
+
   const connectToSocket = async () => {
-    const socket = io("https://connecto-back.onrender.com");
+    const socket = io(API_URL);
     socket.on("connect", () => {
       setSocket(socket);
     });
   };
 
+  const disconnectSocket = () => {
+    socket.disconnect();
+  };
+
   const [isWriting, setIsWriting] = useState(null);
+  const [messageNotificationReceived, setMessageNotificationReceived] =
+    useState(null);
 
   useEffect(() => {
     if (isWriting) {
-      const chatFind = chats?.find((id) => isWriting.chatID !== id);
-      console.log({ chatFind });
-      console.log({ chat });
-      if (chats) {
-        console.log({ chats });
-        const newChats = chats.filter((id) => id === isWriting.chatID);
-        setChats([...newChats, { ...chatFind, writing: true }]);
+      const chatFind = chatsList?.find((id) => isWriting.chatID !== id);
+
+      if (chatsList) {
+        console.log({ chatsList });
+        const newChats = chatsList.filter((id) => id === isWriting.chatID);
+        setChatsList([...newChats, { ...chatFind, writing: true }]);
+        setTimeout(() => {
+          setChatsList([...newChats, { ...chatFind, writing: false }]);
+          setIsWriting(null);
+        }, 2000);
       }
       if (chat) {
         if (chat._id === isWriting.chatID && !to.writing) {
           setTo({ ...to, writing: true });
+          setTimeout(() => {
+            setTo({ ...to, writing: false });
+            setIsWriting(null);
+          }, 2000);
         } else return;
       } else return;
     }
-    setTimeout(() => {
-      setTo({ ...to, writing: false });
-      setIsWriting(null);
-    }, 2000);
   }, [isWriting]);
+
+  useEffect(() => {
+    if (messageNotificationReceived) {
+      const { chatData, from, message, notify } = messageNotificationReceived;
+
+      pushMessageNotification(notify);
+
+      /* preguntar si el usuario esta en la pagina de chats */
+      if (chatsList) {
+        const findChat = chatsList.find(
+          (chat) => chat._id.toString() === chatData._id.toString()
+        );
+        console.log({ findChat });
+        if (findChat) {
+          const chatFinded = chatsList.find(
+            (chat) => chat._id.toString() === chatData._id.toString()
+          );
+          chatFinded.lastMessage = message;
+          const newChatArray = [...chatsList];
+          const index = newChatArray.findIndex(
+            (chat) => chat._id.toString() === chatData._id.toString()
+          );
+          newChatArray[index] = chatFinded;
+          setChatsList(newChatArray);
+        } else {
+          setChatsList([...chatsList, chatData]);
+        }
+      }
+    }
+  }, [messageNotificationReceived]);
 
   useEffect(() => {
     if (socket) {
@@ -46,7 +91,7 @@ const SocketContextProvider = (props) => {
       });
 
       socket.on("messageNotification", (data) => {
-        console.log("message notification:", data);
+        setMessageNotificationReceived(data);
       });
 
       socket.on("writing", async ({ from, chatID }) => {
@@ -64,7 +109,7 @@ const SocketContextProvider = (props) => {
     };
   }, [socket]);
 
-  const value = { socket, connectToSocket };
+  const value = { socket, connectToSocket, disconnectSocket };
 
   return (
     <socketContext.Provider value={value}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getChatApi, exitToChatApi } from "../../apis/chat.api";
+import { getChatApi } from "../../apis/chat.api";
 import Chat from "../../components/Chat";
 import Conversation from "../../components/Conversation";
 import EnterMessage from "../../components/EnterMessage";
@@ -11,7 +11,7 @@ import "../../styles/pages/chats/ChatPage.scss";
 
 const ChatPage = () => {
   const params = useParams();
-  const { user } = useAuthContext();
+  const { user, deleteMemberOnChat } = useAuthContext();
 
   const { chat, setChat, setFrom, setTo, from, to } = useChatContext();
 
@@ -46,14 +46,14 @@ const ChatPage = () => {
       }
       setChatLoading(false);
     })();
-    return () => {
-      setChat(null);
+    return async () => {
+      deleteMemberOnChat();
     };
   }, []);
 
   return (
     <div className="container w-full h-full flex flex-col justify-center">
-      <section className="w-full ss:h-[95%] max-w-4xl mx-auto flex flex-col shadow-md bg-white rounded-md">
+      <section className="w-full ss:h-[95%] max-w-5xl mx-auto flex flex-col shadow-md bg-white rounded-md">
         {chatLoading ? (
           <div className="w-full maxHeightConversation ss:min-h-[45rem] flex items-center justify-center">
             <p className="w-72 text-center font-mono text-gray-400 text-3xl">
@@ -63,7 +63,7 @@ const ChatPage = () => {
         ) : (
           <>
             {/* conversation container */}
-            <div className="maxHeightChat flex flex-col ss:min-h-[45rem] w-full">
+            <div className="maxHeightChat flex flex-col justify-between ss:min-h-[45rem] w-full">
               {chat && from && to && (
                 <>
                   <header className="w-full p-2 h-20 flex items-center shadow-sm shadow-gray-200">
@@ -71,28 +71,31 @@ const ChatPage = () => {
                   </header>
                   {/* conversation box */}
 
-                  {chat.conversation.length ? (
-                    <Chat>
-                      {chat.conversation.map((message, index) => (
-                        <Conversation key={index} message={message} />
-                      ))}
-                    </Chat>
-                  ) : (
-                    <div className="w-full maxHeightConversation ss:min-h-[45rem] flex items-center justify-center">
-                      <p className="w-72 text-center font-mono text-gray-400 text-3xl">
-                        not conversation yet
-                      </p>
-                    </div>
-                  )}
-                  {to.writing ? (
-                    <div className="flex items-center px-6 py-3">
-                      <p className="font-mono shadow-sm rounded-3xl px-4 py-2 bg-gray-100 ml-2 text-gray-600">
-                        ...
-                      </p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                  <Chat>
+                    {/* 3 dots writing */}
+                    {to.writing ? (
+                      <div className="flex items-center px-6 py-3">
+                        <p className="font-mono shadow-sm rounded-3xl px-4 py-2 bg-gray-100 ml-2 text-gray-600">
+                          ...
+                        </p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {chat.conversation.length ? (
+                      <>
+                        {chat.conversation.map((message, index) => (
+                          <Conversation key={index} message={message} />
+                        ))}
+                      </>
+                    ) : (
+                      <div className="w-full maxHeightConversation ss:min-h-[45rem] flex items-center justify-center">
+                        <p className="w-72 text-center font-mono text-gray-400 text-3xl">
+                          not conversation yet
+                        </p>
+                      </div>
+                    )}
+                  </Chat>
                 </>
               )}
             </div>

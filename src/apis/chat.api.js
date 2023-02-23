@@ -138,3 +138,24 @@ export const exitToChatApi = async ({ userID, token }) => {
     };
   }
 };
+
+export const deleteMemberOnChatApi = async ({ userID, token }) => {
+  try {
+    const { data } = await axios.post(
+      `${API_URL}/api/v1/chats/deleteMemberOnChat`,
+      {
+        userID,
+      },
+      {
+        headers: {
+          "x-access-token": token,
+        },
+      }
+    );
+  } catch (error) {
+    return {
+      success: false,
+      error: error.response.data.error,
+    };
+  }
+};
