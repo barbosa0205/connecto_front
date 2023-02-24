@@ -51,8 +51,6 @@ const SignUp = () => {
 
         /* conectamos al socket */
         connectToScket(data.user._id, token);
-
-        navigate(location.state.from || "/");
       }
     })();
   }, [submited]);

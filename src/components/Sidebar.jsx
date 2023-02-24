@@ -10,38 +10,45 @@ const Sidebar = ({ toggleSidebar }) => {
     <>
       {user && (
         <motion.aside
-          initial={{ x: 200 }}
-          animate={{ x: 0 }}
-          exit={{ x: 200 }}
+          initial={{ opaciti: 0, x: 300 }}
+          animate={{ x: 0, opacity: 1 }}
+          exit={{
+            x: 300,
+            transition: {
+              ease: [0.2, 0.5, 0.8, 1],
+            },
+          }}
           transition={{
-            type: "tween",
-            duration: 0.2,
+            default: { ease: [0.2, 0.3, 0.4, 1] },
+            duration: 0.3,
           }}
           className="w-2/4 max-w-xl h-screen fixed flex flex-col top-0 right-0 bg-white shadow-md ss:hidden"
         >
-          <header className="p-4 flex items-center justify-between border-b">
-            <p>{user.username}</p>
+          <div className="w-full h-full flex flex-col justify-between">
+            <header className="p-4 flex items-center justify-between border-b">
+              <p>{user.username}</p>
 
-            {/* close  */}
-            <i
-              onClick={toggleSidebar}
-              className="ri-close-line text-5xl text-emerald-400 cursor-pointer"
-            ></i>
-          </header>
+              {/* close  */}
+              <i
+                onClick={toggleSidebar}
+                className="ri-close-line text-5xl text-emerald-400 cursor-pointer"
+              ></i>
+            </header>
 
-          <MenuList>
-            <MenuItem onClick={toggleSidebar} to={"/chats"}>
-              Chats
-            </MenuItem>
-          </MenuList>
+            <MenuList>
+              <MenuItem onClick={toggleSidebar} to={"/chats"}>
+                Chats
+              </MenuItem>
+            </MenuList>
 
-          <footer className="w-full px-4 py-6 flex items-center justify-end bg-gray-700">
-            <i
-              onClick={logout}
-              className="ri-logout-box-line mx-2 text-3xl text-white cursor-pointer"
-            ></i>
-            <i className="ri-equalizer-line mx-2 text-3xl text-white cursor-pointer"></i>
-          </footer>
+            <footer className="w-full px-4 py-6 flex items-center justify-end bg-gray-700">
+              <i
+                onClick={logout}
+                className="ri-logout-box-line mx-2 text-3xl text-white cursor-pointer"
+              ></i>
+              <i className="ri-equalizer-line mx-2 text-3xl text-white cursor-pointer"></i>
+            </footer>
+          </div>
         </motion.aside>
       )}
     </>

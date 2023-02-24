@@ -13,8 +13,6 @@ import {
 } from "../../utils/errors/signinErrors";
 
 const SignIn = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { authUser } = useAuthContext();
   const { connectToSocket } = useSocketContext();
   const { formData, handleChange, handleSubmit, submited, submitErrors } =
@@ -52,7 +50,6 @@ const SignIn = () => {
 
         /* conectamos al socket */
         connectToSocket(data.user._id, data.token);
-        navigate(location.state.from || "/");
       }
     })();
   }, [submited]);

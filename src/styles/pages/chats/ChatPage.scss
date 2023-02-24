@@ -1,12 +1,16 @@
 .maxHeightChat {
   min-height: calc(100vh - 12rem);
   @media (min-width: 550px) {
-    max-height: calc(100vh - 20rem);
+    max-height: calc(100vh - 25rem);
   }
 }
 
 .maxHeightConversation {
   justify-self: end;
-  min-height: calc(100% - 17rem);
-  max-height: calc(100% - 17rem);
+  min-height: calc(100vh - 17rem);
+  max-height: calc(100vh - 17rem);
+
+  @media (min-width: 550px) {
+    min-height: calc(100vh - 30rem);
+  }
 }

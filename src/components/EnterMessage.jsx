@@ -10,6 +10,7 @@ import {
 } from "../utils/errors/enterMesageErrors";
 
 const EnterMessage = () => {
+  const sendMessageAudio = new Audio("/sounds/sendMessage.mp3");
   const { user, setUser } = useAuthContext();
   const { chat, to, from, updateChat } = useChatContext();
   const { socket } = useSocketContext();
@@ -79,6 +80,8 @@ const EnterMessage = () => {
 
         /* actualizamos el chat con la nueva conversacion*/
         updateChat(data.chatData);
+
+        sendMessageAudio.play();
 
         /* limpiamos el input */
         formData.message = "";

@@ -1,8 +1,11 @@
+import { AnimatePresence } from "framer-motion";
 import React, { createContext, useEffect, useState } from "react";
+import MessageNotification from "../components/MessageNotification";
 
 export const pushNotificationContext = createContext();
 
 const PushNotificationProvider = (props) => {
+  const notifyReceived = new Audio("/sounds/iphone_ding.mp3");
   const [messageNotification, setMessageNotification] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
@@ -14,6 +17,7 @@ const PushNotificationProvider = (props) => {
 
   const pushNotification = (notification) => {
     setNotifications([...notifications, notification]);
+    notifyReceived.play();
     sleep(3000);
   };
 
@@ -22,7 +26,11 @@ const PushNotificationProvider = (props) => {
       setMessageNotification(null);
     }
     setMessageNotification(notification);
-    sleep(3000);
+    /*   sleep(3000); */
+  };
+
+  const closeMessageNotification = () => {
+    setMessageNotification(null);
   };
 
   const value = {
@@ -31,18 +39,19 @@ const PushNotificationProvider = (props) => {
     pushMessageNotification,
     pushNotification,
     sleep,
+    closeMessageNotification,
   };
 
   return (
     <pushNotificationContext.Provider value={value}>
       {props.children}
-      {messageNotification ? (
-        <div className="absolute top-0 left-0 w-full flex items-center justify-center bg-transparent">
-          <p className="">NOTIFY</p>
-        </div>
-      ) : (
-        ""
-      )}
+      <AnimatePresence>
+        {messageNotification ? (
+          <MessageNotification data={messageNotification} />
+        ) : (
+          ""
+        )}
+      </AnimatePresence>
     </pushNotificationContext.Provider>
   );
 };

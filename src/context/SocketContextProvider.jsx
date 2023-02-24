@@ -14,6 +14,8 @@ const SocketContextProvider = (props) => {
   const { chats, chat, to, setTo, updateChat, chatsList, setChatsList } =
     useChatContext();
 
+  const messageRececived = new Audio("/sounds/receivedMessage.mp3");
+
   const connectToSocket = async () => {
     const socket = io(API_URL);
     socket.on("connect", () => {
@@ -33,7 +35,7 @@ const SocketContextProvider = (props) => {
     if (isWriting) {
       const chatFind = chatsList?.find((id) => isWriting.chatID !== id);
 
-      if (chatsList) {
+      if (chatsList?.length) {
         console.log({ chatsList });
         const newChats = chatsList.filter((id) => id === isWriting.chatID);
         setChatsList([...newChats, { ...chatFind, writing: true }]);
@@ -58,7 +60,7 @@ const SocketContextProvider = (props) => {
     if (messageNotificationReceived) {
       const { chatData, from, message, notify } = messageNotificationReceived;
 
-      pushMessageNotification(notify);
+      pushMessageNotification({ notify, from });
 
       /* preguntar si el usuario esta en la pagina de chats */
       if (chatsList) {
@@ -88,6 +90,7 @@ const SocketContextProvider = (props) => {
     if (socket) {
       socket.on("messageReceived", ({ chatData, message, from }) => {
         updateChat(chatData);
+        messageRececived.play();
       });
 
       socket.on("messageNotification", (data) => {
