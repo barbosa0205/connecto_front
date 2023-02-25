@@ -40,6 +40,7 @@ const SignIn = () => {
 
         if (!data.success) {
           /* lanzar error en el form */
+          setLoading(false);
           setSubmitError(data.message);
           return;
         }
