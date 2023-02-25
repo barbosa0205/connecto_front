@@ -6,6 +6,7 @@ const ChatContextProvider = ({ children }) => {
   const [chats, setChats] = useState(null);
   const [chat, setChat] = useState(null);
   const [chatsList, setChatsList] = useState(null);
+  const [chatsFiltered, setChatsFiltered] = useState(null);
   const [to, setTo] = useState(null);
   const [from, setFrom] = useState(null);
 
@@ -23,6 +24,8 @@ const ChatContextProvider = ({ children }) => {
     chatsList,
     setChatsList,
     updateChat,
+    chatsFiltered,
+    setChatsFiltered,
   };
   return <chatContext.Provider value={value}>{children}</chatContext.Provider>;
 };

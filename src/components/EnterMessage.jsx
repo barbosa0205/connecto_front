@@ -23,8 +23,9 @@ const EnterMessage = () => {
       handleEterMessageSubmitErrors
     );
 
-  const [isWriting, setIsWriting] = useState(false);
-
+  /*   const [isWriting, setIsWriting] = useState(false);
+   */
+  const [sendMessageLoading, setSendMessageLoading] = useState(false);
   const sendMessage = async () => {
     try {
       const resp = await sendMessageApi({
@@ -49,11 +50,11 @@ const EnterMessage = () => {
   };
 
   const writing = () => {
-    setIsWriting(true);
+    /*     setIsWriting(true); */
     socket.emit("writing", { to, from, chatID: chat._id });
-    setTimeout(() => {
+    /*  setTimeout(() => {
       setIsWriting(false);
-    }, 3000);
+    }, 3000); */
   };
 
   const addChatToUser = async () => {
@@ -71,6 +72,7 @@ const EnterMessage = () => {
   useEffect(() => {
     (async () => {
       if (submited) {
+        setSendMessageLoading(true);
         /* si la conversacion esta vacia le creamos un chat al usuario que recivio el mensaje */
 
         addChatToUser();
@@ -81,10 +83,12 @@ const EnterMessage = () => {
         /* actualizamos el chat con la nueva conversacion*/
         updateChat(data.chatData);
 
-        sendMessageAudio.play();
+        setSendMessageLoading(false);
 
         /* limpiamos el input */
         formData.message = "";
+
+        sendMessageAudio.play();
 
         /* submited vuelve a false para poder enviar de nuevo otro mensaje */
         restartSubmit();
@@ -112,12 +116,19 @@ const EnterMessage = () => {
         type="text"
         placeholder="type a message"
       />
-      <button
-        onClick={handleSubmit}
-        className="bg-gray-800 text-white px-8 py-2 mx-2 rounded-3xl"
-      >
-        send
-      </button>
+      {!sendMessageLoading ? (
+        <button
+          onClick={handleSubmit}
+          className="bg-gray-800 text-white px-8 py-2 mx-2 rounded-3xl"
+        >
+          send
+        </button>
+      ) : (
+        <button
+          onClick={handleSubmit}
+          className="ri-restart-line mx-2 text-3xl ss:text-4xl rounded-3xl animate-spin"
+        ></button>
+      )}
     </div>
   );
 };

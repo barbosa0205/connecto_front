@@ -30,7 +30,10 @@ const Navbar = () => {
               <>
                 <div className="flex items-center justify-center px-2">
                   {/* search */}
-                  <i className="ri-search-2-line text-3xl px-3 ss:px-5 ss:py-2 mx-1 py-1 rounded-full bg-emerald-500 text-white cursor-pointer"></i>
+                  <i
+                    onClick={() => navigate("/chats?search=search")}
+                    className="ri-search-2-line text-3xl px-3 ss:px-5 ss:py-2 mx-1 py-1 rounded-full bg-emerald-500 text-white cursor-pointer"
+                  ></i>
 
                   {/* add contact */}
                   <i

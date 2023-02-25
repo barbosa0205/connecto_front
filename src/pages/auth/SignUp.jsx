@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import ErrorText from "../../components/ErrorText";
 import Input from "../../components/Input";
 import useAuthContext from "../../context/useAuthContext";
+import useSocketContext from "../../context/useSocketContext";
 import { useForm } from "../../hooks/useForm";
 import {
   signupChangeErrors,
@@ -15,7 +16,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { authUser } = useAuthContext();
-
+  const { connectToSocket } = useSocketContext();
   const { formData, handleChange, handleSubmit, submited, submitErrors } =
     useForm(
       {
@@ -29,10 +30,12 @@ const SignUp = () => {
     );
 
   const [submitError, setSubmitError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (submited) {
+        setLoading(true);
         const data = await signUpApi({
           username: formData.username,
           email: formData.email,
@@ -50,7 +53,8 @@ const SignUp = () => {
         authUser({ ...data.user, token: data.token });
 
         /* conectamos al socket */
-        connectToScket(data.user._id, token);
+        connectToSocket(data.user._id, data.token);
+        setLoading(false);
       }
     })();
   }, [submited]);
@@ -97,7 +101,14 @@ const SignUp = () => {
       ) : (
         ""
       )}
-      <Button text="REGISTER" onClick={handleSubmit} />
+      <div className="w-full flex items-center justify-center">
+        <Button text="REGISTER" onClick={handleSubmit} />
+        {loading ? (
+          <i className="ri-restart-line text-3xl text-white font-bold animate-spin mx-3"></i>
+        ) : (
+          ""
+        )}
+      </div>
       {submitError ? <ErrorText text={submitError} /> : ""}
       <section className="mt-5">
         <p className="font-mono text-lg">

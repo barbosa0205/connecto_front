@@ -12,7 +12,7 @@ export const signupSubmitErrors = (formData) => {
   ) {
     errors = { ...errors, email: "the email is not valid" };
   }
-  if (!formData.password.trim().length) {
+  if (!formData.password.length) {
     errors = { ...errors, password: "the password field not must be empty" };
   }
   if (formData.password !== formData.re_password) {

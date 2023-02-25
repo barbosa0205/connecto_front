@@ -56,9 +56,7 @@ const ChatPage = () => {
       <section className="w-full ss:h-[95%] max-w-5xl mx-auto flex flex-col shadow-md bg-white rounded-md">
         {chatLoading ? (
           <div className="w-full maxHeightConversation ss:min-h-[45rem] flex items-center justify-center">
-            <p className="w-72 text-center font-mono text-gray-400 text-3xl">
-              LOADING...
-            </p>
+            <i className="ri-restart-line animate-spin text-7xl"></i>
           </div>
         ) : (
           <>
@@ -90,7 +88,7 @@ const ChatPage = () => {
                       </>
                     ) : (
                       <div className="w-full maxHeightConversation ss:min-h-[45rem] flex items-center justify-center">
-                        <p className="w-72 text-center font-mono text-gray-400 text-3xl">
+                        <p className="w-72 text-center font-mono text-gray-500 text-3xl">
                           not conversation yet
                         </p>
                       </div>
@@ -99,10 +97,10 @@ const ChatPage = () => {
                 </>
               )}
             </div>
+            {/* enter message container */}
+            <EnterMessage chat={chat} />
           </>
         )}
-        {/* enter message container */}
-        <EnterMessage chat={chat} />
       </section>
     </div>
   );
