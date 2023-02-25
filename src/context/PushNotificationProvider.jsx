@@ -17,11 +17,11 @@ const PushNotificationProvider = (props) => {
 
   const pushNotification = (notification) => {
     setNotifications([...notifications, notification]);
-    notifyReceived.play();
     sleep(3000);
   };
 
   const pushMessageNotification = (notification) => {
+    notifyReceived.play();
     if (messageNotification) {
       setMessageNotification(null);
     }
