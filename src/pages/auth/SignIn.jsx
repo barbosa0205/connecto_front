@@ -15,15 +15,21 @@ import {
 const SignIn = () => {
   const { authUser } = useAuthContext();
   const { connectToSocket } = useSocketContext();
-  const { formData, handleChange, handleSubmit, submited, submitErrors } =
-    useForm(
-      {
-        usernameOrEmail: "",
-        password: "",
-      },
-      signinChangeErrors,
-      signinSubmitErrors
-    );
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    submited,
+    submitErrors,
+    restartSubmit,
+  } = useForm(
+    {
+      usernameOrEmail: "",
+      password: "",
+    },
+    signinChangeErrors,
+    signinSubmitErrors
+  );
 
   const [submitError, setSubmitError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -42,6 +48,7 @@ const SignIn = () => {
           /* lanzar error en el form */
           setLoading(false);
           setSubmitError(data.message);
+          restartSubmit();
           return;
         }
 

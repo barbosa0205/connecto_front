@@ -44,6 +44,7 @@ const SignUp = () => {
         if (!data.success) {
           setSubmitError(data.message);
           setLoading(false);
+          restartSubmit();
           return;
         }
 
